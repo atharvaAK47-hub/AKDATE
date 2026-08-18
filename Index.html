@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date with AK 💖</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #ffe6ea 0%, #fdfbfb 100%);
+            color: #4a0e1e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 50px 40px;
+            border-radius: 24px;
+            border: 1px solid #ffccd5;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h2 {
+            font-family: 'Georgia', serif;
+            font-size: 1.6rem;
+            font-style: italic;
+            font-weight: normal;
+            color: #c9184a;
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #8b5a66;
+            margin-bottom: 24px;
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff4d6d, #ff758f);
+            color: #ffffff;
+            border: none;
+            padding: 12px 36px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, #c9184a, #ff4d6d);
+            box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .btn-small {
+            padding: 8px 28px;
+            font-size: 0.95rem;
+        }
+
+        .btn-pay {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        input[type="date"],
+        input[type="time"] {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #ffccd5;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: #4a0e1e;
+            outline: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background-color: #fff;
+        }
+
+        input[type="date"]:focus,
+        input[type="time"]:focus {
+            border-color: #ff4d6d;
+            box-shadow: 0 0 8px rgba(255, 77, 109, 0.2);
+        }
+
+        .step {
+            display: none;
+            animation: softFadeIn 0.6s ease forwards;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .heart-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes softFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div id="step1" class="step active">
+            <div class="heart-icon">💌</div>
+            <h2>Are you free?</h2>
+            <button onclick="nextStep('step2')">Yes</button>
+        </div>
+
+        <div id="step2" class="step">
+            <div class="heart-icon">🌹</div>
+            <h2>Do you want to go out with AK?</h2>
+            <button class="btn-small" onclick="nextStep('step3')">Yes</button>
+        </div>
+
+        <div id="step3" class="step">
+            <div class="heart-icon">📅</div>
+            <h2>Select our perfect date</h2>
+            <input type="date" id="dateInput" onchange="nextStep('step4')">
+        </div>
+
+        <div id="step4" class="step">
+            <div class="heart-icon">⏰</div>
+            <h2>What time should we meet?</h2>
+            <input type="time" id="timeInput" onchange="showPayment()">
+        </div>
+
+        <div id="step5" class="step">
+            <div class="heart-icon">💘</div>
+            <h2>Secure Your Date</h2>
+            <p id="summaryText">A romantic date with AK</p>
+            <button class="btn-pay" onclick="alert('Payment successful! AK is waiting for you... 🥰')">Pay $500.00</button>
+        </div>
+
+    </div>
+
+    <script>
+        function nextStep(nextStepId) {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach(step => step.classList.remove('active'));
+            document.getElementById(nextStepId).classList.add('active');
+        }
+
+        function showPayment() {
+            const dateVal = document.getElementById('dateInput').value;
+            const timeVal = document.getElementById('timeInput').value;
+
+            if (dateVal && timeVal) {
+                const dateObj = new Date(dateVal);
+                const options = {
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric'
+                };
+                const formattedDate = dateObj.toLocaleDateString(undefined, options);
+
+                document.getElementById('summaryText').innerHTML =
+                    `A romantic date with AK on <br><strong>${formattedDate}</strong> at <strong>${timeVal}</strong>`;
+            }
+
+            nextStep('step5');
+        }
+    </script>
+
+</body>
+</html>
